@@ -1,0 +1,74 @@
+
+.cadastro-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 30px 20px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    margin: 2em 1em 1em 35em;
+}
+
+.cadastro-container h2 {
+    margin-bottom: 20px;
+    color: #2C3E50;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495E;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group input:focus {
+    border-color: #49647e;
+    outline: none;
+}
+
+.btn-cadastrar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #29ee29;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-cadastrar:hover {
+    background-color: #1b971b;
+
+}
+
+.btn-voltarLogin{
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: white;
+    background-color: #49647e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;   
+}
+
+.btn-voltarLogin:hover {
+    background-color: #2C3E50;
+}

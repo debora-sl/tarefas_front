@@ -1,0 +1,25 @@
+<div class="cadastro-container">
+    <h2>Cadastro</h2>
+    <form action="#" method="POST">
+        <div class="form-group">
+            <label for="password">Nome:</label>
+            <input type="text" id="nome" name="nome" placeholder="Informe seu nome" required>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Confirmar Senha:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua senha" required>
+        </div>
+        <button type="submit" class="btn-cadastrar">Cadastrar</button>
+        <a ui-sref="login">
+            <button type="submit" class="btn-voltarLogin">Voltar para Login</button>
+        </a>
+    </form>
+</div>
