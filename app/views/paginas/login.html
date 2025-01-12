@@ -1,17 +1,17 @@
 <div class="login-container">
     <h2>Login</h2>
-    <form action="#" method="POST">
+    <form>
         <div class="form-group">
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            <input type="email" ng-model="usuario.email" id="email" name="email" placeholder="Digite seu e-mail" required>
         </div>
         <div class="form-group">
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            <input type="password" ng-model="usuario.password" id="password" name="password" placeholder="Digite sua senha" required>
         </div>
-        <button type="submit" class="btn-login">Entrar</button>
+        <button type="button" ng-click="logar()" class="btn-login">Entrar</button>
         <a ui-sref="cadastro">
-            <button type="submit" class="btn-cadastrarSe">Cadastre-se</button>
+            <button type="button" class="btn-cadastrarSe">Cadastre-se</button>
         </a>
     </form>
 </div>
