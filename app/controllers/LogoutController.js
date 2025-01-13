@@ -18,7 +18,7 @@ angular.module('meuApp')
             
         }, function(error){
             console.log('Erro', error);
-            localStorage.remove('token');
+            localStorage.removeItem('token');
             $state.go('login');
             
         });
