@@ -1,0 +1,115 @@
+.container-projeto {
+    width: 70%;
+    height: auto;
+    margin: 0 1em 1em 20em;
+    padding: 20px;
+}
+.main-content-projeto {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 80vh; /* Define a altura máxima da área de conteúdo principal */
+    overflow-y: auto; /* Habilita a rolagem vertical quando necessário */
+}
+
+/* Estiliza a barra de rolagem para o elemento com overflow */
+.main-content-projeto::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+    background-color: #f2f2f2; /* Cor de fundo da área de rolagem */
+    border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Estilo da "trilha" da barra de rolagem */
+.main-content-projeto::-webkit-scrollbar-track {
+    background-color: #f2f2f2; /* Fundo da trilha */
+    border-radius: 8px;
+}
+
+/* Estilo do "polegar" da barra de rolagem */
+.main-content-projeto::-webkit-scrollbar-thumb {
+    background-color: #4CAF50; /* Cor do polegar */
+    border-radius: 8px; /* Bordas arredondadas do polegar */
+    border: 2px solid #f2f2f2; /* Espaçamento ao redor do polegar */
+}
+
+/* Estilo do polegar ao passar o mouse */
+.main-content-projeto::-webkit-scrollbar-thumb:hover {
+    background-color: #45a049; /* Cor do polegar ao passar o mouse */
+}
+
+/* Para navegadores que não suportam ::-webkit-scrollbar */
+.main-content-projeto {
+    scrollbar-color: #4CAF50 #f2f2f2; /* Polegar e trilha */
+    scrollbar-width: thin; /* Define a largura da barra (padrão) */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card h3 {
+    margin-top: 0;
+}
+.button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #45a049;
+}
+.project-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.project-table th, .project-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.project-table th {
+    background-color: #f2f2f2;
+}
+.form-section input, .form-section textarea, .form-section select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.form-section button {
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form-section button:hover {
+    background-color: #0b7dda;
+}
+
+/* Estilo para o botão de cancelar alinhado à direita e com fundo vermelho */
+.cancel-button {
+    background-color: red !important; /* Uso do !important para garantir que a cor vermelha seja aplicada */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right; /* Alinha o botão à direita */
+    margin-bottom: 20px; /* Espaço abaixo do botão */
+}
+.cancel-button:hover {
+    background-color: darkred !important; /* Garantir que a cor hover também seja vermelha */
+}

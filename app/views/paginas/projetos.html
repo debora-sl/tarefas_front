@@ -1,0 +1,83 @@
+<div class="container-projeto">
+    <div class="main-content-projeto">
+        <h1>Gerenciamento de Projetos</h1>
+
+        <!-- Botão para novo projeto -->
+        <div class="card" ng-show = "acao == 'listando'">
+            <button class="button" ng-click="novoProjetoAcao()">Novo Projeto</button>
+        </div>
+
+        <!-- Tabela de Projetos Cadastrados -->
+        <div class="card" ng-show = "acao == 'listando'">
+            <h3>Projetos Cadastrados</h3>
+            <table class="project-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Data de Início</th>
+                        <th>Data de Conclusão</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Projeto A</td>
+                        <td>Desenvolvimento de um novo sistema de gestão</td>
+                        <td>01/01/2024</td>
+                        <td>30/06/2024</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>Projeto B</td>
+                        <td>Implementação de uma plataforma de e-commerce</td>
+                        <td>15/02/2024</td>
+                        <td>15/08/2024</td>
+                        <td>150</td>
+                    </tr>
+                    <tr>
+                        <td>Projeto C</td>
+                        <td>Desenvolvimento de uma aplicação mobile</td>
+                        <td>10/03/2024</td>
+                        <td>10/09/2024</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulário de novo cadastro de projeto -->
+        <div class="form-section card" ng-show = "acao == 'cadastrando'">
+            <button type="button" class="cancel-button" ng-click="listandoProjetoAcao()">Cancelar</button>
+
+            <h3>Cadastrar Novo Projeto</h3>
+            <form>
+                <label for="nome">Nome do Projeto</label>
+                <input type="text" id="nome" name="nome" ng-model="novoProjeto.nome" placeholder="Nome do Projeto" required>
+
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" name="descricao" ng-model="novoProjeto.descricao" placeholder="Descrição do Projeto" rows="4" required></textarea>
+
+                <label for="data_inicio">Data de Início</label>
+                <input type="date" id="data_inicio" name="data_inicio" ng-model="novoProjeto.dataDeInicio" required>
+
+                <label for="data_conclusao">Data de Conclusão</label>
+                <input type="date" id="data_conclusao" name="data_conclusao" ng-model="novoProjeto.dataDeConclusao" required>
+
+                <label for="pontos">Pontos</label>
+                <input type="number" id="pontos" name="pontos" ng-model="novoProjeto.pontos" placeholder="Pontos do Projeto" required>
+
+                <!-- Campo de Prioridade -->
+                <label for="prioridade">Prioridade</label>
+                <select id="prioridade" name="prioridade" required>
+                    <option value="urgente">Urgente</option>
+                    <option value="alta">Alta</option>
+                    <option value="normal">Normal</option>
+                    <option value="baixa">Baixa</option>
+                </select>
+
+                <button type="button" ng-click="cadastrarNovoProjeto()">Cadastrar Projeto</button>
+            </form>
+        </div>
+    </div>
+</div>

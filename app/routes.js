@@ -26,6 +26,10 @@ angular.module('meuApp', ['ui.router'])
         templateUrl: 'app/views/paginas/logout.html',
         controller: 'LogoutController'
     })
-
+    .state('comMenu.projetos', {
+        url: '/projetos',
+        templateUrl: 'app/views/paginas/projetos.html',
+        controller: 'ProjetosController'
+    })
     $urlRouterProvider.otherwise('/');
 });
