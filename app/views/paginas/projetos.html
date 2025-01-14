@@ -18,29 +18,20 @@
                         <th>Data de Início</th>
                         <th>Data de Conclusão</th>
                         <th>Pontos</th>
+                        <th>Prioridade</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody ng-repeat="item in projetos track by item.id">
                     <tr>
-                        <td>Projeto A</td>
-                        <td>Desenvolvimento de um novo sistema de gestão</td>
-                        <td>01/01/2024</td>
-                        <td>30/06/2024</td>
-                        <td>120</td>
-                    </tr>
-                    <tr>
-                        <td>Projeto B</td>
-                        <td>Implementação de uma plataforma de e-commerce</td>
-                        <td>15/02/2024</td>
-                        <td>15/08/2024</td>
-                        <td>150</td>
-                    </tr>
-                    <tr>
-                        <td>Projeto C</td>
-                        <td>Desenvolvimento de uma aplicação mobile</td>
-                        <td>10/03/2024</td>
-                        <td>10/09/2024</td>
-                        <td>100</td>
+                        <td>{{item.nome}}</td>
+                        <td>{{item.descricao.substr(0,50)}}</td>
+                        <td>{{item.dataDeInicio | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.dataDeConclusao | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.pontos}}</td>
+                        <td>{{item.prioridade}}</td>
+                        <td><input type="button" value="Deletar" ng-click="$parent.deletarModal(item.id)"></td>
+
                     </tr>
                 </tbody>
             </table>
