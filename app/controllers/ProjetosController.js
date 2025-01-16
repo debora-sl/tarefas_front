@@ -29,6 +29,7 @@ angular.module('meuApp')
             });
     };
 
+    // função para tratar as datas
     tratarDados = function (dados) {
         for (x = 0; x < dados.length; x++) {
             dados[x]['dataDeInicio'] = new Date(dados[x]['dataDeInicio']);
@@ -36,12 +37,50 @@ angular.module('meuApp')
         }
         return dados;
     }
+
+    // função para tratar as datas consultadas
+    tratarDadosConsultar = function (dados) {
+
+        dados['dataDeInicio'] = new Date(dados['dataDeInicio']);
+        dados['dataDeConclusao'] =  new Date(dados['dataDeConclusao']);
+
+        return dados;
+    }
+
+    // função para consultar projetos
+    $scope.consultar = function(id){
+        url = 'http://localhost:8000/api/projetos/consultar/' + id;
+
+        $http.get(url, $config).then(function(response){
+            if(response.status = 200){
+                $scope.editarProjeto = tratarDadosConsultar(response.data);
+                $scope.acao = 'editando';
+            }
+            console.log('Consulta: ', response);
+            
+        }, function(error){
+            console.log(error);
+            
+        });
+
+    }
     
     // chamando a função listar
     $scope.listar();
 
     // variavel projetos
     $scope.novoProjeto = {
+        nome: '',
+        descricao: '',
+        dataDeInicio: '',
+        dataDeConclusao: '',
+        pontos: '',
+        prioridade:''  
+    }
+
+    // variavel editar projetos
+    $scope.editarProjeto = {
+        id: '',
         nome: '',
         descricao: '',
         dataDeInicio: '',
@@ -81,8 +120,6 @@ angular.module('meuApp')
     }
 
     $scope.deletarDeVerdade = function (id) {
-
-
         $http.delete('http://localhost:8000/api/projetos/deletar/' + id, $config).then(function (response) {
             if (response.status == 200) {
                 Swal.fire({
@@ -90,7 +127,6 @@ angular.module('meuApp')
                     text: "Seu projeto foi deletado",
                     icon: "success"
                 });
-
                 $scope.listar();
             }
         }, function (error) {
@@ -105,8 +141,6 @@ angular.module('meuApp')
     $scope.listandoProjetoAcao = function(){
         $scope.acao = 'listando';
     }
-
-
 
     // cadastrando novo projeto e salvando no BD
     $scope.cadastrarNovoProjeto = function(){
@@ -129,16 +163,14 @@ angular.module('meuApp')
                     $scope.listar();
                     console.log(result);
                     if (result.isDismissed) {
-                        $scope.acao.pagina = 'listando';
+                        $scope.$apply(function(){
+                            $scope.listandoProjetoAcao();
+                        })
                     }
                 });
             }   
         }, function(error){
             console.log('Projeto não cadastrado!', error);
         })
-        
     }
-
-
-
 });
