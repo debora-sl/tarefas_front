@@ -33,6 +33,17 @@ angular.module('meuApp')
         prioridade: 'Normal'
     }
 
+    // variável para editar projeto
+    $scope.editarProjeto = {
+        id: '',
+        nome: '',
+        descricao: '',
+        dataDeInicio: '',
+        dataDeConclusao: '',
+        pontos: '',
+        prioridade: 'Normal'
+    }
+
     // objeto projetos
     $scope.projetos = [];
 
@@ -53,9 +64,9 @@ angular.module('meuApp')
         console.log('Botão novo projeto foi clicado');
         console.log($scope.novoProjeto);
 
-        $scope.url = 'http://localhost:8000/api/projetos/criar';
+        url = 'http://localhost:8000/api/projetos/criar';
 
-        $http.post($scope.url, $scope.novoProjeto, $config).then(function(response){
+        $http.post(url, $scope.novoProjeto, $config).then(function(response){
             console.log('Projeto cadastrado', response);
             
             if (response.status == 201) {
@@ -71,9 +82,10 @@ angular.module('meuApp')
                     cancelButtonText: "Não, eu acabei!"
                 }).then((result) => {
                     $scope.listar();
-                    console.log(result);
                     if (result.isDismissed) {
-                        $scope.acao = 'listando';
+                            $scope.$apply(function () {
+                            $scope.listandoProjetoAcao();
+                        });
                     }
                 });
             }
@@ -90,9 +102,9 @@ angular.module('meuApp')
 
     // função que lista os projetos
     $scope.listar = function(){
-        $scope.url = 'http://localhost:8000/api/projetos/listar';
+        url = 'http://localhost:8000/api/projetos/listar';
 
-        $http.get($scope.url, $config).then(function(response){
+        $http.get(url, $config).then(function(response){
             if(response.status == 200){
                 // salvando os dados no objeto projeto. E chamando a função tratar dados
                 $scope.projetos = tratarDados(response.data);
@@ -135,9 +147,9 @@ angular.module('meuApp')
 
     // função que deleta mesmo no bd
     $scope.deletar = function(id){
-        $scope.url = 'http://localhost:8000/api/projetos/deletar/' + id;
+        url = 'http://localhost:8000/api/projetos/deletar/' + id;
 
-        $http.delete($scope.url, $config).then(function(response){
+        $http.delete(url, $config).then(function(response){
             if(response.status == 200){
                 // deletando o projeto
                 Swal.fire({
@@ -149,6 +161,49 @@ angular.module('meuApp')
             }
         }, function(error){
             console.log('Erro, projeto não deletado!: ', error);
+        })
+    }
+
+    // função que converte as datas de projetos consultados
+    tratarDadosConsultados = function (dados) {
+            $scope.acao = 'editando'
+            dados['dataDeInicio'] = new Date(dados['dataDeInicio']);
+            dados['dataDeConclusao'] =  new Date(dados['dataDeConclusao']);
+        return dados;
+    }
+
+    // função que consulta e traz os dados para o formulário editar
+    $scope.consultar = function(id){
+        url = 'http://localhost:8000/api/projetos/consultar/' + id;
+
+        $http.get(url, $config).then(function(response){
+            if(response.status = 200){
+                $scope.editarProjeto =  tratarDadosConsultados(response.data);
+                console.log('Projeto para editar',  $scope.editarProjeto);
+            }       
+        }, function(error){
+            console.log('Deu erro aqui!', error);    
+        })
+    }
+
+    // função que salva a edição em um projeto
+    $scope.salvarEdicaoProjeto = function(){
+        url = 'http://localhost:8000/api/projetos/editarUmaInformacao/' + $scope.editarProjeto.id;
+        $http.patch(url, $scope.editarProjeto, $config).then(function(response){
+            if(response.status == 200){
+                // editando o projeto
+                Swal.fire({
+                    title: "Editado!",
+                    text: "Seu projeto foi editado.",
+                    icon: "success"
+                });
+                $scope.listar();
+                $scope.acao = 'listando';
+            }
+            
+        }, function(error){
+            console.log(error);
+            
         })
     }
 

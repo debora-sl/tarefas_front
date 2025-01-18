@@ -114,3 +114,49 @@ h1 {
 .cancel-button:hover {
     background-color: darkred !important; /* Garantir que a cor hover também seja vermelha */
 }
+
+/* Estilo para alinhar os botões de ações na mesma linha */
+.acoes-container {
+    display: flex; /* Torna os elementos filhos flexíveis */
+    justify-content: center; /* Centraliza horizontalmente */
+    gap: 10px; /* Espaço entre os botões */
+    align-items: center; /* Alinha verticalmente no centro */
+}
+
+/* Ajusta a largura mínima para evitar quebra */
+.acoes-container span {
+    display: flex; /* Garante que o ícone ocupe apenas o espaço necessário */
+    align-items: center;
+    justify-content: center;
+    font-size: 18px; /* Tamanho do ícone */
+}
+
+/* Estilos gerais para os ícones */
+span {
+    cursor: pointer; /* Faz o ícone ser interativo, indicando que pode ser clicado */
+    display: inline; /* Para o span comportar-se como um elemento de bloco */
+    font-size: 16px; /* Define o tamanho do ícone */
+    padding: 10px; /* Dá um espaço ao redor do ícone */
+    transition: transform 0.3s ease, color 0.3s ease; /* Efeito suave de transformação e mudança de cor */
+}
+
+/* Estilo para o ícone de Consultar */
+.icone-consultar i {
+    color: #007bff; /* Cor azul para o ícone de consulta */
+}
+
+/* Estilo para o ícone de Deletar */
+.icone-deletar i {
+    color: #dc3545; /* Cor vermelha para o ícone de deletar */
+}
+
+/* Efeito de hover para ambos os ícones */
+span:hover {
+    transform: scale(1.2); /* Aumenta ligeiramente o ícone ao passar o mouse */
+    color: #555; /* Muda a cor para cinza escuro no hover */
+}
+
+/* Adicionando um pequeno efeito no hover para os ícones */
+.icone-consultar:hover i {
+    color: #0056b3; /* Azul mais escuro para o ícone de consulta */
+}

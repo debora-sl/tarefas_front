@@ -32,10 +32,56 @@
                         <td>{{item.dataDeConclusao | date:'dd/MM/yyyy'}}</td>
                         <td>{{item.pontos}}</td>
                         <td>{{item.prioridade}}</td>
-                        <td><input type="button" value="Deletar" ng-click="$parent.deletarModal(item.id)"></td>
+                        <td class="acoes">
+                            <div  class="acoes-container">
+                                <!-- Ícone Consultar -->
+                                <span class="icone-consultar" ng-click="$parent.consultar(item.id)">
+                                    <i class="fas fa-search"></i>
+                                </span>
+    
+                                <!-- Ícone Deletar -->
+                                <span class="icone-deletar" ng-click="$parent.deletarModal(item.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Formulário de editar um projeto -->
+        <div class="form-section card" ng-show="acao == 'editando'">
+            <button type="button" class="cancel-button" ng-click="listandoProjetoAcao()">Cancelar</button>
+
+            <h3>Editar Projeto - {{editarProjeto.nome}}</h3>
+            <form>
+                <label for="nome">Nome do Projeto</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome do Projeto" required ng-model="editarProjeto.nome">
+
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" name="descricao" placeholder="Descrição do Projeto" rows="4" required ng-model="editarProjeto.descricao"></textarea>
+
+                <label for="data_inicio">Data de Início</label>
+                <input type="date" id="data_inicio" name="data_inicio" required ng-model="editarProjeto.dataDeInicio">
+
+                <label for="data_conclusao">Data de Conclusão</label>
+                <input type="date" id="data_conclusao" name="data_conclusao" required ng-model="editarProjeto.dataDeConclusao">
+
+                <label for="pontos">Pontos</label>
+                <input type="number" id="pontos" name="pontos" placeholder="Pontos do Projeto" required ng-model="editarProjeto.pontos">
+
+                <!-- Campo de Prioridade -->
+                <label for="prioridade">Prioridade</label>
+                <select id="prioridade" name="prioridade" required ng-model="editarProjeto.prioridade">
+                    <option value="urgente">Urgente</option>
+                    <option value="alta">Alta</option>
+                    <option value="normal">Normal</option>
+                    <option value="baixa">Baixa</option>
+                </select>
+
+                <button type="button" ng-click="salvarEdicaoProjeto()">Salvar</button>
+            </form>
         </div>
 
         <!-- Formulário de novo cadastro de projeto -->
@@ -70,6 +116,7 @@
 
                 <button type="button" ng-click="cadastrarNovoProjeto()">Cadastrar Projeto</button>
             </form>
-        </div>
+
+
     </div>
 </div>
