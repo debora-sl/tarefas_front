@@ -2,152 +2,62 @@ angular.module('meuApp')
 .controller('ProjetosController', function($scope, $http){
     console.log('ProjetosController funcionou!');
 
-    // verificando se o usuário está autenticado
+    // pegando o token e passando para a config
     $token = localStorage.getItem('token');
     $config = {
         headers: {
             'Authorization': 'Bearer' + $token
         }
     }
-    
-    // variavel para mostrar listando ou cadastrando
+
+    // variável para listar os projetos
     $scope.acao = 'listando';
 
-    // criando objeto projetos
-    $scope.projetos = [];
-
-    // listando os projetos
-    $scope.listar = function(){
-        $http.get('http://localhost:8000/api/projetos/listar', $config).then(function(response){
-            if(response.status == 200){
-                $scope.projetos = tratarDados(response.data);
-                console.log('Projetos cadastrados: ', $scope.projetos);
-            }
-                
-            }, function(error){
-                console.log(error);
-            });
-    };
-
-    // função para tratar as datas
-    tratarDados = function (dados) {
-        for (x = 0; x < dados.length; x++) {
-            dados[x]['dataDeInicio'] = new Date(dados[x]['dataDeInicio']);
-            dados[x]['dataDeConclusao'] =  new Date(dados[x]['dataDeConclusao']);
-        }
-        return dados;
+    // função que muda o valor do ação, para exibir o formulário de cadastrar projetos
+    $scope.novoProjetoAcao = function(){
+        $scope.acao = 'cadastrando'
     }
 
-    // função para tratar as datas consultadas
-    tratarDadosConsultar = function (dados) {
-
-        dados['dataDeInicio'] = new Date(dados['dataDeInicio']);
-        dados['dataDeConclusao'] =  new Date(dados['dataDeConclusao']);
-
-        return dados;
+    // função que muda o valor do ação, para exibir a tabela com os projetos
+    $scope.listandoProjetoAcao = function(){
+        $scope.acao = 'listando'
     }
 
-    // função para consultar projetos
-    $scope.consultar = function(id){
-        url = 'http://localhost:8000/api/projetos/consultar/' + id;
-
-        $http.get(url, $config).then(function(response){
-            if(response.status = 200){
-                $scope.editarProjeto = tratarDadosConsultar(response.data);
-                $scope.acao = 'editando';
-            }
-            console.log('Consulta: ', response);
-            
-        }, function(error){
-            console.log(error);
-            
-        });
-
-    }
-    
-    // chamando a função listar
-    $scope.listar();
-
-    // variavel projetos
+    // variável para novo projeto
     $scope.novoProjeto = {
         nome: '',
         descricao: '',
         dataDeInicio: '',
         dataDeConclusao: '',
         pontos: '',
-        prioridade:''  
+        prioridade: 'Normal'
     }
 
-    // variavel editar projetos
-    $scope.editarProjeto = {
-        id: '',
-        nome: '',
-        descricao: '',
-        dataDeInicio: '',
-        dataDeConclusao: '',
-        pontos: '',
-        prioridade:''  
-    }
+    // objeto projetos
+    $scope.projetos = [];
 
     // função que limpa o formulário
-    $scope.limpar = function () {
-
+    $scope.limpar = function(){
         $scope.novoProjeto = {
             nome: '',
             descricao: '',
             dataDeInicio: '',
-            prioridade: 'normal',
             dataDeConclusao: '',
-            pontos: ''
+            pontos: '',
+            prioridade: 'Normal'
         }
     }
 
-    $scope.deletarModal = function (id) {
-        Swal.fire({
-            title: "Você tem certeza?",
-            text: "Deletar este projeto é uma ação irreversível!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sim, delete isso!",
-            cancelButtonText: "Não delete!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $scope.deletarDeVerdade(id);
-            }
-        });
-    }
-
-    $scope.deletarDeVerdade = function (id) {
-        $http.delete('http://localhost:8000/api/projetos/deletar/' + id, $config).then(function (response) {
-            if (response.status == 200) {
-                Swal.fire({
-                    title: "Deletado!",
-                    text: "Seu projeto foi deletado",
-                    icon: "success"
-                });
-                $scope.listar();
-            }
-        }, function (error) {
-            console.log(error);
-        });
-    }
-
-    $scope.novoProjetoAcao = function(){
-        $scope.acao = 'cadastrando';
-    }
-
-    $scope.listandoProjetoAcao = function(){
-        $scope.acao = 'listando';
-    }
-
-    // cadastrando novo projeto e salvando no BD
+    // função que cria um novo projeto
     $scope.cadastrarNovoProjeto = function(){
-        console.log('Projeto: ', $scope.novoProjeto);
+        console.log('Botão novo projeto foi clicado');
+        console.log($scope.novoProjeto);
 
-        $http.post('http://localhost:8000/api/projetos/criar', $scope.novoProjeto, $config).then(function(response){
-            console.log('Projeto cadastrado!', 200);
+        $scope.url = 'http://localhost:8000/api/projetos/criar';
+
+        $http.post($scope.url, $scope.novoProjeto, $config).then(function(response){
+            console.log('Projeto cadastrado', response);
+            
             if (response.status == 201) {
                 $scope.limpar();
                 Swal.fire({
@@ -157,20 +67,89 @@ angular.module('meuApp')
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Sim, cadastrar um novo projeto!",
+                    confirmButtonText: "Sim, cadastrar um novo!",
                     cancelButtonText: "Não, eu acabei!"
                 }).then((result) => {
                     $scope.listar();
                     console.log(result);
                     if (result.isDismissed) {
-                        $scope.$apply(function(){
-                            $scope.listandoProjetoAcao();
-                        })
+                        $scope.acao = 'listando';
                     }
                 });
-            }   
+            }
         }, function(error){
             console.log('Projeto não cadastrado!', error);
+
+            Swal.fire({
+                title: "Os dados estão corretos",
+                text: "Gostaria de tentar novamente?",
+                icon: "question"
+            });
         })
     }
+
+    // função que lista os projetos
+    $scope.listar = function(){
+        $scope.url = 'http://localhost:8000/api/projetos/listar';
+
+        $http.get($scope.url, $config).then(function(response){
+            if(response.status == 200){
+                // salvando os dados no objeto projeto. E chamando a função tratar dados
+                $scope.projetos = tratarDados(response.data);
+                console.log('Projetos cadastrados: ', $scope.projetos);
+            }
+        }, function(error){
+            console.log('Erro: ', error);
+        })
+    }
+
+    // função que converte as datas
+    tratarDados = function (dados) {
+        for (x = 0; x < dados.length; x++) {
+            dados[x]['dataDeInicio'] = new Date(dados[x]['dataDeInicio']);
+            dados[x]['dataDeConclusao'] =  new Date(dados[x]['dataDeConclusao']);
+        }
+        return dados;
+    }
+
+    // chamando a função que lista
+    $scope.listar();
+
+    // função que verifica se quer deletar mesmo
+    $scope.deletarModal = function(id){
+        Swal.fire({
+            title: "Você tem certeza?",
+            text: "Deletar este projeto é uma ação irreversível!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, delete isto!",
+            cancelButtonText: "Não, cancelar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $scope.deletar(id);
+            }
+        });
+    }
+
+    // função que deleta mesmo no bd
+    $scope.deletar = function(id){
+        $scope.url = 'http://localhost:8000/api/projetos/deletar/' + id;
+
+        $http.delete($scope.url, $config).then(function(response){
+            if(response.status == 200){
+                // deletando o projeto
+                Swal.fire({
+                    title: "Deletado!",
+                    text: "Seu projeto foi deletado.",
+                    icon: "success"
+                });
+                $scope.listar();
+            }
+        }, function(error){
+            console.log('Erro, projeto não deletado!: ', error);
+        })
+    }
+
 });

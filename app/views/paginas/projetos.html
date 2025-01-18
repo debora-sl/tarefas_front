@@ -1,14 +1,14 @@
 <div class="container-projeto">
     <div class="main-content-projeto">
-        <h1>Gerenciamento de Projetos</h1>
+        <h1>Gerenciamento de Projetos - {{acao}}</h1>
 
         <!-- Botão para novo projeto -->
-        <div class="card" ng-show = "acao == 'listando'">
+        <div class="card" ng-show="acao == 'listando'">
             <button class="button" ng-click="novoProjetoAcao()">Novo Projeto</button>
         </div>
 
         <!-- Tabela de Projetos Cadastrados -->
-        <div class="card" ng-show = "acao == 'listando'">
+        <div class="card"  ng-show="acao == 'listando'">
             <h3>Projetos Cadastrados</h3>
             <table class="project-table">
                 <thead>
@@ -22,45 +22,46 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="item in projetos track by item.id">
+                <tbody ng-repeat="item in projetos">
                     <tr>
                         <td>{{item.nome}}</td>
-                        <td>{{item.descricao.substr(0,50)}}</td>
+                        <!-- limitando a descricao para 20 caracteres -->
+                        <td>{{item.descricao.substr(0,30)}}</td>
+                        <!-- convertendo as datas para o formato do Brasil -->
                         <td>{{item.dataDeInicio | date:'dd/MM/yyyy'}}</td>
                         <td>{{item.dataDeConclusao | date:'dd/MM/yyyy'}}</td>
                         <td>{{item.pontos}}</td>
                         <td>{{item.prioridade}}</td>
                         <td><input type="button" value="Deletar" ng-click="$parent.deletarModal(item.id)"></td>
-
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <!-- Formulário de novo cadastro de projeto -->
-        <div class="form-section card" ng-show = "acao == 'cadastrando'">
+        <div class="form-section card"  ng-show="acao == 'cadastrando'">
             <button type="button" class="cancel-button" ng-click="listandoProjetoAcao()">Cancelar</button>
 
             <h3>Cadastrar Novo Projeto</h3>
             <form>
                 <label for="nome">Nome do Projeto</label>
-                <input type="text" id="nome" name="nome" ng-model="novoProjeto.nome" placeholder="Nome do Projeto" required>
+                <input type="text" id="nome" name="nome" placeholder="Nome do Projeto" required ng-model="novoProjeto.nome">
 
                 <label for="descricao">Descrição</label>
-                <textarea id="descricao" name="descricao" ng-model="novoProjeto.descricao" placeholder="Descrição do Projeto" rows="4" required></textarea>
+                <textarea id="descricao" name="descricao" placeholder="Descrição do Projeto" rows="4" required ng-model="novoProjeto.descricao"></textarea>
 
                 <label for="data_inicio">Data de Início</label>
-                <input type="date" id="data_inicio" name="data_inicio" ng-model="novoProjeto.dataDeInicio" required>
+                <input type="date" id="data_inicio" name="data_inicio" required ng-model="novoProjeto.dataDeInicio">
 
                 <label for="data_conclusao">Data de Conclusão</label>
-                <input type="date" id="data_conclusao" name="data_conclusao" ng-model="novoProjeto.dataDeConclusao" required>
+                <input type="date" id="data_conclusao" name="data_conclusao" required ng-model="novoProjeto.dataDeConclusao">
 
                 <label for="pontos">Pontos</label>
-                <input type="number" id="pontos" name="pontos" ng-model="novoProjeto.pontos" placeholder="Pontos do Projeto" required>
+                <input type="number" id="pontos" name="pontos" placeholder="Pontos do Projeto" required ng-model="novoProjeto.pontos">
 
                 <!-- Campo de Prioridade -->
                 <label for="prioridade">Prioridade</label>
-                <select id="prioridade" name="prioridade" required>
+                <select id="prioridade" name="prioridade" required ng-model="novoProjeto.prioridade">
                     <option value="urgente">Urgente</option>
                     <option value="alta">Alta</option>
                     <option value="normal">Normal</option>
