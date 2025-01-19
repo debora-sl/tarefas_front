@@ -80,6 +80,38 @@
                     <option value="baixa">Baixa</option>
                 </select>
 
+                <table class="project-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Status</th>
+                            <th>Prioridade</th>
+                            <th>Criado em</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="item in editarProjeto.tarefas">
+                        <tr>
+                            <td>{{item.nome}}</td>
+                            <td>{{item.status}}</td>
+                            <td>{{item.prioridade}}</td>
+                            <td>{{item.created_at | date:'dd/MM/yyyy'}}</td>
+                            <td>
+                                <span class="icone-consultar" ng-click="$parent.consultarTarefa(item.id, item.nome)">
+                                    <i class="fas fa-search"></i>
+                                </span>
+    
+                                <!-- Ícone Deletar -->
+                                <span class="icone-deletar" ng-click="$parent.deletarTarefaModal(item.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" ng-click="adicionarTarefaNaEdicao()">Nova Tarefa</button>                
+
                 <button type="button" ng-click="salvarEdicaoProjeto()">Salvar</button>
             </form>
         </div>
@@ -113,6 +145,14 @@
                     <option value="normal">Normal</option>
                     <option value="baixa">Baixa</option>
                 </select>
+                <br>
+
+                <h1>Tarefas</h1>
+                <div ng-repeat="tarefa in novoProjeto.tarefas track by tarefa.id">
+                    <label for="tarefa{{$index}}">Tarefa {{ $index + 1 }}</label>
+                    <input type="text" id="tarefa{{$index}}" name="tarefas{{$index}}" ng-model="tarefa.nome" placeholder="Nome da Tarefa">
+                </div>
+                <button type="button" ng-click="adicionarTarefa()">Nova Tarefa</button> <br><br>
 
                 <button type="button" ng-click="cadastrarNovoProjeto()">Cadastrar Projeto</button>
             </form>

@@ -41,11 +41,17 @@ angular.module('meuApp')
         dataDeInicio: '',
         dataDeConclusao: '',
         pontos: '',
-        prioridade: 'Normal'
+        prioridade: 'Normal',
+        tarefas: []
     }
 
     // objeto projetos
     $scope.projetos = [];
+
+    // função que adiciona tarefa
+    $scope.adicionarTarefa = function () {
+        $scope.novoProjeto.tarefas.push({ nome: '', id: Date.now() });
+    }
 
     // função que limpa o formulário
     $scope.limpar = function(){
@@ -70,6 +76,23 @@ angular.module('meuApp')
             console.log('Projeto cadastrado', response);
             
             if (response.status == 201) {
+
+                for($i = 0; $i < $scope.novoProjeto.tarefas.length; $i++){
+                    url = 'http://localhost:8000/api/tarefas/cadastrar';
+
+                    post = {};
+                    post.nome = $scope.novoProjeto.tarefas[$id].nome;
+                    post.id_projeto = response.data.id;
+
+                    $http.post(url, post, $config).then(function(response){
+                        console.log('Terefa: ', response);
+                        
+                    }, function(error){
+                        console.log('Erro: ', error);
+                        
+                    })
+                    console.log( $scope.novoProjeto.tarefas[$i].nome); 
+                }
                 $scope.limpar();
                 Swal.fire({
                     title: "Projeto cadastrado!",
@@ -203,8 +226,90 @@ angular.module('meuApp')
             
         }, function(error){
             console.log(error);
-            
         })
     }
 
+    // função para adicionar Tarefas no formulário de edição
+    $scope.adicionarTarefaNaEdicao = function () {
+        Swal.fire({
+            input: "textarea",
+            inputLabel: `Adicionando tarefa`,
+            inputPlaceholder: '',
+            showCancelButton: true
+        }).then(function (result) {
+            if (result.isConfirmed && result.value) {
+                const text = result.value;
+                $scope.$apply(function () {
+
+                    post = {};
+                    post.nome = text;
+                    post.id_projeto = $scope.editarProjeto.id;
+
+                    $http.post('http://localhost:8000/api/tarefas/criar', post, $config).then(function (response) {
+                    $scope.consultar($scope.editarProjeto.id);
+
+                    }, function (error) {
+                        console.log(error);
+                    })
+                    // Aqui você pode chamar a função para atualizar a tarefa
+                });
+            }
+        });
+    }
+
+    // função editar uma tarefa
+    $scope.atualizaTarefa = function (id, nome) {
+        post = {};
+        post.nome = nome;
+
+        url = 'http://localhost:8000/api/tarefas/editarUmaInformacao/' + id
+        $http.patch(url, post, $config).then(function (response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    title: "Editado!",
+                    text: "Sua tarefa foi editada",
+                    icon: "success"
+                });
+                $scope.consultar($scope.editarProjeto.id);
+            }
+        }, function (error) {
+            console.log('Erro', error);
+        });
+    }
+
+    // função que verifica se quer deletar mesmo a tarefa
+    $scope.deletarTarefaModal = function (id) {
+        Swal.fire({
+            title: "Você tem certeza?",
+            text: "Deletar esta tarefa é uma ação irreversível!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, delete!",
+            cancelButtonText: "Cancelar!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $scope.deletarTarefa(id);
+            }
+        });
+    }
+
+    // função que deleta uma tarefa no bd
+    $scope.deletarTarefa = function (id) {
+
+        $http.delete('http://localhost:8000/api/tarefas/deletar/' + id, $config).then(function (response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    title: "Deletado!",
+                    text: "Sua tarefa foi deletada",
+                    icon: "success"
+                });
+
+                $scope.consultar($scope.editarProjeto.id);
+            }
+        }, function (error) {
+            console.log(error);
+        });
+    }
 });
