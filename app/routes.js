@@ -31,5 +31,10 @@ angular.module('meuApp', ['ui.router'])
         templateUrl: 'app/views/paginas/projetos.html',
         controller: 'ProjetosController'
     })
+    .state('comMenu.usuarios', {
+        url: '/usuarios',
+        templateUrl: 'app/views/paginas/usuarios.html',
+        controller: 'UsuariosController'
+    })
     $urlRouterProvider.otherwise('/');
 });

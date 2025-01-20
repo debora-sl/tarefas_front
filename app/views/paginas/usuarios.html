@@ -1,0 +1,90 @@
+<div class="container-projeto">
+    <div class="main-content-projeto">
+        <h1>Gerenciamento de Usuários - {{acao}}</h1>
+
+        <!-- Botão para novo usuário -->
+        <div class="card" ng-show="acao == 'listando'">
+            <button class="button" ng-click="novoUsuarioAcao()">Novo Usuário</button>
+        </div>
+
+        <!-- Tabela de Usuários Cadastrados -->
+        <div class="card"  ng-show="acao == 'listando'">
+            <h3>Usuários Cadastrados</h3>
+            <table class="project-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="item in usuarios">
+                    <tr>
+                        <td>{{item.name}}</td>
+                        <td>{{item.email}}</td>
+
+                        <td class="acoes">
+                            <div  class="acoes-container">
+                                <!-- Ícone Consultar -->
+                                <span class="icone-consultar" ng-click="$parent.consultar(item.id)">
+                                    <i class="fas fa-search"></i>
+                                </span>
+    
+                                <!-- Ícone Deletar -->
+                                <span class="icone-deletar" ng-click="$parent.deletarModal(item.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulário de editar um usuario -->
+        <div class="form-section card" ng-show="acao == 'editando'">
+            <button type="button" class="cancel-button" ng-click="listandoUsuarioAcao()">Cancelar</button>
+
+            <h3>Editar Usuário - {{editarUsuario.name}}</h3>
+            <form>
+                <label for="name">Nome do Usuario</label>
+                <input type="text" id="name" name="name" placeholder="Nome do Usuário" required ng-model="editarUsuario.name">
+
+                <label for="email">E-mail do Usuario</label>
+                <input type="text" id="email" name="email" placeholder="E-mail do Usuário" required ng-model="editarUsuario.email">
+
+                <label for="senha">Senha do Usuario</label>
+                <input type="password" id="password" name="password" placeholder="Senha do Usuário" required ng-model="editarUsuario.password">
+
+                    <tbody ng-repeat="item in editarUsuario.usuarios">
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.password}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="button" ng-click="salvarEdicaoUsuario()">Salvar</button>
+            </form>
+        </div>
+
+        <!-- Formulário de novo cadastro de usuario -->
+        <div class="form-section card"  ng-show="acao == 'cadastrando'">
+            <button type="button" class="cancel-button" ng-click="listandoUsuarioAcao()">Cancelar</button>
+
+            <h3>Cadastrar Novo Usuário</h3>
+            <form>
+                <label for="name">Nome do Usuário</label>
+                <input type="text" id="name" name="name" placeholder="Nome do Usuário" required ng-model="novoUsuario.name">
+            
+                <label for="email">E-mail do Usuário</label>
+                <input type="email" id="email" name="email" placeholder="E-mail" required ng-model="novoUsuario.email">
+
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Senha" required ng-model="novoUsuario.password">
+
+                <button type="button" ng-click="cadastrarNovoUsuario()">Cadastrar Usuário</button>
+            </form>
+    </div>
+</div>
