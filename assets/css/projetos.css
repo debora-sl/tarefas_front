@@ -1,8 +1,9 @@
 .container-projeto {
-    width: 70%;
+    width: 80%;
     height: auto;
-    margin: 0 1em 11.5em 20em;
+    margin: 0 1em 11.5em 15em;
     padding: 20px;
+
 }
 .main-content-projeto {
     display: flex;
@@ -10,6 +11,7 @@
     gap: 20px;
     max-height: 80vh; /* Define a altura máxima da área de conteúdo principal */
     overflow-y: auto; /* Habilita a rolagem vertical quando necessário */
+
 }
 
 /* Estiliza a barra de rolagem para o elemento com overflow */
