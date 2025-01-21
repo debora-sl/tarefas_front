@@ -103,6 +103,9 @@ angular.module('meuApp')
                 console.log('Usuarios cadastrados: ', $scope.usuarios);
             }
         }, function(error){
+            if(error.status == 401){
+                logout();
+            }
             console.log('Erro: ', error);
         })
     }
@@ -178,8 +181,21 @@ angular.module('meuApp')
             }
             
         }, function(error){
+            // checando se token está válido, se não tiver, direciona para se logar
+            if(error.status == 401){
+                logout();
+            }
             console.log(error);
         })
     }
 
+    // função para deslogar usuários
+    logout = function(){
+
+        //removendo o token do localStorage
+        localStorage.removeItem('token');
+
+        // direcionando o usuário para o login
+        $IsStateFilter.go('login');
+    }
 });

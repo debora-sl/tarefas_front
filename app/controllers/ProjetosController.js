@@ -10,6 +10,16 @@ angular.module('meuApp')
         }
     }
 
+   // função para deslogar usuários
+   logout = function(){
+
+    //removendo o token do localStorage
+    localStorage.removeItem('token');
+
+    // direcionando o usuário para o login
+    $IsStateFilter.go('login');
+    }
+        
     // variável para listar os projetos
     $scope.acao = 'listando';
 
@@ -134,6 +144,9 @@ angular.module('meuApp')
                 console.log('Projetos cadastrados: ', $scope.projetos);
             }
         }, function(error){
+            if(error.status == 401){
+                logout();
+            }
             console.log('Erro: ', error);
         })
     }
@@ -312,4 +325,6 @@ angular.module('meuApp')
             console.log(error);
         });
     }
+
+ 
 });
