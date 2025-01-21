@@ -138,9 +138,9 @@ span {
     cursor: pointer; /* Faz o ícone ser interativo, indicando que pode ser clicado */
     display: inline; /* Para o span comportar-se como um elemento de bloco */
     font-size: 16px; /* Define o tamanho do ícone */
-    padding: 10px; /* Dá um espaço ao redor do ícone */
+    padding: 5px; /* Dá um espaço ao redor do ícone */
     transition: transform 0.3s ease, color 0.3s ease; /* Efeito suave de transformação e mudança de cor */
-}
+} 
 
 /* Estilo para o ícone de Consultar */
 .icone-consultar i {
