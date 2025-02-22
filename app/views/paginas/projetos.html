@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{item.nome}}</td>
                         <!-- limitando a descricao para 20 caracteres -->
-                        <td>{{item.descricao.substr(0,30)}}</td>
+                        <td>{{item.descricao.substr(0,30)}}...</td>
                         <!-- convertendo as datas para o formato do Brasil -->
                         <td>{{item.dataDeInicio | date:'dd/MM/yyyy'}}</td>
                         <td>{{item.dataDeConclusao | date:'dd/MM/yyyy'}}</td>
@@ -81,6 +81,7 @@
                 </select>
 
                 <table class="project-table">
+                    <h1>Tarefas</h1>
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -109,10 +110,10 @@
                         </tr>
                     </tbody>
                 </table>
-
+                <br><br>
                 <button type="button" ng-click="adicionarTarefaNaEdicao()">Nova Tarefa</button>                
 
-                <button type="button" ng-click="salvarEdicaoProjeto()">Salvar</button>
+                <button type="button" ng-click="salvarEdicaoProjeto()">Salvar Alterações</button>
             </form>
         </div>
 

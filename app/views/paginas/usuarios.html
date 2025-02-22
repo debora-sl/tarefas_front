@@ -48,13 +48,13 @@
             <h3>Editar Usuário - {{editarUsuario.name}}</h3>
             <form>
                 <label for="name">Nome do Usuario</label>
-                <input type="text" id="name" name="name" placeholder="Nome do Usuário" required ng-model="editarUsuario.name">
+                <input type="text" id="name-editar" name="name" placeholder="Nome do Usuário" required ng-model="editarUsuario.name">
 
                 <label for="email">E-mail do Usuario</label>
-                <input type="text" id="email" name="email" placeholder="E-mail do Usuário" required ng-model="editarUsuario.email">
+                <input type="text" id="email-editar" name="email" placeholder="E-mail do Usuário" required ng-model="editarUsuario.email">
 
                 <label for="senha">Senha do Usuario</label>
-                <input type="password" id="password" name="password" placeholder="Senha do Usuário" required ng-model="editarUsuario.password">
+                <input type="password" id="password-editar" name="password" placeholder="Senha do Usuário" required ng-model="editarUsuario.password">
 
                     <tbody ng-repeat="item in editarUsuario.usuarios">
                         <tr>
