@@ -6,7 +6,7 @@ angular.module('meuApp')
         $token = localStorage.getItem('token');
         $config = {
             headers: {
-                'Authorization': 'Bearer' + $token
+                'Authorization': 'Bearer ' + $token
             }
         }
 
@@ -72,7 +72,8 @@ angular.module('meuApp')
                 dataDeInicio: '',
                 dataDeConclusao: '',
                 pontos: '',
-                prioridade: 'Normal'
+                prioridade: 'Normal',
+                tarefas: []
             }
         }
 
@@ -81,27 +82,27 @@ angular.module('meuApp')
             console.log('Botão novo projeto foi clicado');
             console.log($scope.novoProjeto);
 
-            url = 'http://localhost:8000/api/projetos/criar';
+            $url = 'http://localhost:8000/api/projetos/criar';
 
-            $http.post(url, $scope.novoProjeto, $scope.novoProjeto, $config).then(function (response) {
+            $http.post($url, $scope.novoProjeto, $config).then(function (response) {
                 console.log('Projeto cadastrado', response);
 
                 if (response.status == 201) {
+                    // Obtendo o id do projeto cadastrado retornado pela API
+                    id_projeto = response.data.id;
 
                     for ($i = 0; $i < $scope.novoProjeto.tarefas.length; $i++) {
                         url = 'http://localhost:8000/api/tarefas/criar';
 
                         post = {};
                         post.nome = $scope.novoProjeto.tarefas[$i].nome;
-                        post.id_projeto = response.data.id;
-                        console.log('Teste id: ', response.data.id);
-
+                        post.id_projeto = id_projeto;
 
                         $http.post(url, post, $config).then(function (response) {
-                            console.log('Terefa: ', response);
+                            console.log('Terefa cadastrada: ', response);
 
                         }, function (error) {
-                            console.log('Erro: ', error);
+                            console.log('Tarefa não cadastrada. Erro: ', error);
 
                         })
                         console.log($scope.novoProjeto.tarefas[$i].nome);
@@ -118,7 +119,11 @@ angular.module('meuApp')
                         cancelButtonText: "Não, eu acabei!"
                     }).then((result) => {
                         $scope.listar();
-                        if (result.isDismissed) {
+                        if (result.isConfirmed) {
+                            $scope.$apply(function () {
+                                $scope.limpar();
+                            });
+                        } else {
                             $scope.$apply(function () {
                                 $scope.listandoProjetoAcao();
                             });
@@ -268,6 +273,27 @@ angular.module('meuApp')
                             console.log(error);
                         })
                         // Aqui você pode chamar a função para atualizar a tarefa
+                    });
+                }
+            });
+        }
+
+        // função para consultar a Tarefa
+        $scope.consultarTarefa = function (id, nome) {
+            Swal.fire({
+                input: "textarea",
+                inputLabel: `Editando tarefa #${id} - ${nome}`,
+                inputPlaceholder: nome,
+                showCancelButton: true
+            }).then(function (result) {
+                // Verifique se o usuário não clicou no botão Cancelar
+                if (result.isConfirmed && result.value) {
+                    const text = result.value;
+
+                    $scope.$apply(function () {
+                        console.log('Chegou');
+                        // Aqui você pode chamar a função para atualizar a tarefa
+                        $scope.atualizaTarefa(id, text);
                     });
                 }
             });
