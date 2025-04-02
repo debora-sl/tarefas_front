@@ -86,6 +86,8 @@ angular.module('meuApp')
 
             $http.post($url, $scope.novoProjeto, $config).then(function (response) {
                 console.log('Projeto cadastrado', response);
+                console.log('Data Inicio: ', $scope.novoProjeto.dataDeInicio);
+                console.log('Data Conclusão: ', $scope.novoProjeto.dataDeConclusao);
 
                 if (response.status == 201) {
                     // Obtendo o id do projeto cadastrado retornado pela API
@@ -147,7 +149,7 @@ angular.module('meuApp')
 
             $http.get(url, $config).then(function (response) {
                 if (response.status == 200) {
-                    // salvando os dados no objeto projeto. E chamando a função tratar dados
+                    // salvando os dados no objeto projeto. E chamando a função tratar datas
                     $scope.projetos = tratarDados(response.data);
                     console.log('Projetos cadastrados: ', $scope.projetos);
                 }
@@ -163,7 +165,11 @@ angular.module('meuApp')
         tratarDados = function (dados) {
             for (x = 0; x < dados.length; x++) {
                 dados[x]['dataDeInicio'] = new Date(dados[x]['dataDeInicio']);
+                // adicionando 3 horas para que seja exibido corretamente no back
+                dados[x]['dataDeInicio'].setHours(dados[x]['dataDeInicio'].getHours() + 3);
                 dados[x]['dataDeConclusao'] = new Date(dados[x]['dataDeConclusao']);
+                // adicionando 3 horas para que seja exibido corretamente no back
+                dados[x]['dataDeConclusao'].setHours(dados[x]['dataDeConclusao'].getHours() + 3);
             }
             return dados;
         }
