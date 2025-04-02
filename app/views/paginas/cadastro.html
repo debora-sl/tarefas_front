@@ -2,22 +2,22 @@
     <h2>Cadastro</h2>
     <form action="#" method="POST">
         <div class="form-group">
-            <label for="password">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Informe seu nome" required>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" placeholder="Informe seu nome" required ng-model="novoUsuario.name">
         </div>
         <div class="form-group">
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required ng-model="novoUsuario.email">
         </div>
         <div class="form-group">
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required ng-model="novoUsuario.password">
         </div>
         <div class="form-group">
-            <label for="password">Confirmar Senha:</label>
-            <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua senha" required>
+            <label for="passwordConfirm">Confirmar Senha:</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua senha" required ng-model="novoUsuario.passwordConfirm">
         </div>
-        <button type="submit" class="btn-cadastrar">Cadastrar</button>
+        <button type="button" class="btn-cadastrar" ng-click="cadastrarNovoUsuarioNaoAutenticado()">Cadastrar</button>
         <a ui-sref="login">
             <button type="submit" class="btn-voltarLogin">Voltar para Login</button>
         </a>
