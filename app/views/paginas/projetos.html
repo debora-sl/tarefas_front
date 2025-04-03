@@ -80,6 +80,36 @@
                     <option value="baixa">Baixa</option>
                 </select>
 
+                <br>
+                <!-- Colaboradores -->
+                <table class="project-table">
+                    <h1>Colaboradores</h1>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="item in editarProjeto.colaboradores">
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.email}}</td>
+                            <td>
+                                <!-- Ícone Deletar -->
+                                <span class="icone-deletar" ng-click="$parent.deletarColaboradorNModal(item.id)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <button type="button" ng-click="adicionarColaboradorNaEdicao()">Novo Colaborador</button>   
+
+                <br>
+                <!-- Tarefas -->
                 <table class="project-table">
                     <h1>Tarefas</h1>
                     <thead>
@@ -113,6 +143,7 @@
                 <br><br>
                 <button type="button" ng-click="adicionarTarefaNaEdicao()">Nova Tarefa</button>                
 
+                <br><br><br>
                 <button type="button" ng-click="salvarEdicaoProjeto()">Salvar Alterações</button>
             </form>
         </div>
@@ -157,7 +188,7 @@
 
                 <button type="button" ng-click="cadastrarNovoProjeto()">Cadastrar Projeto</button>
             </form>
-
+        </div>
 
     </div>
 </div>

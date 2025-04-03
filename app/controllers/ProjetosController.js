@@ -53,7 +53,6 @@ angular.module('meuApp')
             dataDeConclusao: '',
             pontos: '',
             prioridade: 'Normal',
-            tarefas: []
         }
 
         // objeto projetos
@@ -256,11 +255,40 @@ angular.module('meuApp')
             })
         }
 
+        // função para adicionar Colaboradores no formulário de edição 
+        $scope.adicionarColaboradorNaEdicao = function () {
+            Swal.fire({
+                input: "textarea",
+                inputLabel: `Adicionandar Colaborador`,
+                inputPlaceholder: '',
+                showCancelButton: true
+            }).then(function (result) {
+                if (result.isConfirmed && result.value) {
+                    const text = result.value;
+                    $scope.$apply(function () {
+
+                        post = {};
+                        post.id_user = text;
+                        post.id_projeto = $scope.editarProjeto.id;
+
+                        $http.post('http://localhost:8000/api/userProjeto/cadastrar', post, $config).then(function (response) {
+                            $scope.consultar($scope.editarProjeto.id);
+                            console.log(response);
+
+                        }, function (error) {
+                            console.log(error);
+                        })
+                        // Aqui você pode chamar a função para atualizar a tarefa
+                    });
+                }
+            });
+        }
+
         // função para adicionar Tarefas no formulário de edição
         $scope.adicionarTarefaNaEdicao = function () {
             Swal.fire({
                 input: "textarea",
-                inputLabel: `Adicionando tarefa`,
+                inputLabel: `Adicionar tarefa`,
                 inputPlaceholder: '',
                 showCancelButton: true
             }).then(function (result) {
