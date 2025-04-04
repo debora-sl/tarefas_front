@@ -284,6 +284,42 @@ angular.module('meuApp')
             });
         }
 
+        // função que verifica se quer deletar mesmo a tarefa
+        $scope.deletarColaboradorNaModal = function (id) {
+            Swal.fire({
+                title: "Você tem certeza?",
+                text: "Deletar este colaborador é uma ação irreversível!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, delete!",
+                cancelButtonText: "Cancelar!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $scope.deletarColaborador(id);
+                }
+            });
+        }
+
+        // função que deleta uma tarefa no bd
+        $scope.deletarColaborador = function (id) {
+
+            $http.delete('http://localhost:8000/api/userProjeto/deletar/' + $scope.editarProjeto.id + '/' + id, $config).then(function (response) {
+                if (response.status == 200) {
+                    Swal.fire({
+                        title: "Deletado!",
+                        text: "O(a) colaborador(a) foi deletado(a)",
+                        icon: "success"
+                    });
+
+                    $scope.consultar($scope.editarProjeto.id);
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        }
+
         // função para adicionar Tarefas no formulário de edição
         $scope.adicionarTarefaNaEdicao = function () {
             Swal.fire({

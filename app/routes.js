@@ -1,40 +1,45 @@
 angular.module('meuApp', ['ui.router'])
-.config(function($stateProvider, $urlRouterProvider){
-    $stateProvider
-    .state('comMenu', {
-        abstract: true,
-        templateUrl: 'app/views/partials/comHeaderFooterEMenu.html',
-        controller: ''
-    })
-    .state('comMenu.home', {
-        url: '/',
-        templateUrl: 'app/views/paginas/home.html',
-        controller: 'HomeController'
-    })
-    .state('login', {
-        url: '/login',
-        templateUrl: 'app/views/paginas/login.html',
-        controller: 'LoginController'
-    })
-    .state('cadastro', {
-        url: '/cadastro',
-        templateUrl: 'app/views/paginas/cadastro.html',
-        controller: 'CadastroController'
-    })
-    .state('logout', {
-        url: '/logout',
-        templateUrl: 'app/views/paginas/logout.html',
-        controller: 'LogoutController'
-    })
-    .state('comMenu.projetos', {
-        url: '/projetos',
-        templateUrl: 'app/views/paginas/projetos.html',
-        controller: 'ProjetosController'
-    })
-    .state('comMenu.usuarios', {
-        url: '/usuarios',
-        templateUrl: 'app/views/paginas/usuarios.html',
-        controller: 'UsuariosController'
-    })
-    $urlRouterProvider.otherwise('/');
-});
+    .config(function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('comMenu', {
+                abstract: true,
+                templateUrl: 'app/views/partials/comHeaderFooterEMenu.html',
+                controller: ''
+            })
+            .state('comMenu.home', {
+                url: '/',
+                templateUrl: 'app/views/paginas/home.html',
+                controller: 'HomeController'
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/views/paginas/login.html',
+                controller: 'LoginController'
+            })
+            .state('cadastro', {
+                url: '/cadastro',
+                templateUrl: 'app/views/paginas/cadastro.html',
+                controller: 'CadastroController'
+            })
+            .state('logout', {
+                url: '/logout',
+                templateUrl: 'app/views/paginas/logout.html',
+                controller: 'LogoutController'
+            })
+            .state('comMenu.projetos', {
+                url: '/projetos',
+                templateUrl: 'app/views/paginas/projetos.html',
+                controller: 'ProjetosController'
+            })
+            .state('comMenu.arquivos', {
+                url: '/arquivos',
+                templateUrl: 'app/views/paginas/arquivos.html',
+                controller: 'ArquivosController'
+            })
+            .state('comMenu.usuarios', {
+                url: '/usuarios',
+                templateUrl: 'app/views/paginas/usuarios.html',
+                controller: 'UsuariosController'
+            })
+        $urlRouterProvider.otherwise('/');
+    });

@@ -1,0 +1,23 @@
+<div class="container-projeto">
+    <div class="main-content-projeto">
+        <h1>Gerenciamento de Arquivos</h1>
+
+        <!-- Formulário de novo cadastro de Arquivo -->
+        <div class="form-section card">
+            <button type="button" class="cancel-button" ng-click="listandoProjetoAcao()">Cancelar</button>
+
+            <h3>Cadastrar Novo Arquivo</h3>
+            <form>
+                <label for="nome">Arquivo</label>
+                <!-- <input type="file" id="arquivo" name="arquivo" required onchange="angular.element(this).scope().setArquivo(this)"> -->
+
+                <input type="file" id="arquivo" name="arquivo" required ng-model="informacoes.arquivo" ng-change="setArquivo($event)">
+
+                <p>Arquivo selecionado: {{ informacoes.arquivo ? informacoes.arquivo.name : 'Nenhum arquivo selecionado' }}</p>
+
+                <button type="button" ng-click="cadastrarNovoArquivo()">Cadastrar Arquivo</button>
+            </form>
+        </div>
+
+    </div>
+</div>
